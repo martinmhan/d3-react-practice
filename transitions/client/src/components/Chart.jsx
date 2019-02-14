@@ -19,7 +19,8 @@ class Chart extends Component {
   }
 
   componentDidUpdate = () => {
-    var item = d3.select(findDOMNode(this)).selectAll('circle')
+    let item = d3.select(findDOMNode(this))
+      .selectAll('circle')
       .data(this.props.items, d => d.key);
 
     item.enter().append('circle')
