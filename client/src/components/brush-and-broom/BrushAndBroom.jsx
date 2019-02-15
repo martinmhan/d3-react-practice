@@ -6,7 +6,6 @@ class BrushAndBroom extends Component {
     super(props);
     this.width = 960;
     this.height = 500;
-    this.state = {};
   }
 
   componentDidMount = () => {
@@ -67,11 +66,13 @@ class BrushAndBroom extends Component {
 
     d3.csv('sp500.csv')
       .then(data => {
+        data = data.map(e => ({ date: parseDate(e.date), price: +e.price }));
+
         x.domain(d3.extent(data, d => d.date));
         y.domain([0, d3.max(data, d => d.price)]);
         x2.domain(x.domain());
         y2.domain(y.domain());
-  
+
         focus.append("path")
           .datum(data)
           .attr("class", "area")
@@ -129,12 +130,6 @@ class BrushAndBroom extends Component {
       focus.select(".axis--x").call(xAxis);
       context.select(".brush").call(brush.move, x.range().map(t.invertX, t));
     };
-
-    const type = d => {
-      d.date = parseDate(d.date);
-      d.price = +d.price;
-      return d;
-    }
   };
 
   render = () => (
