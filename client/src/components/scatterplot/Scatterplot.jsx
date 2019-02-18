@@ -6,7 +6,6 @@ import Circles from './Circles.jsx';
 class Scatterplot extends Component {
   constructor(props) {
     super(props);
-    this.ref = React.createRef();
     this.state = {
       data: [
         { gpa: 3.42, height: 138 },
@@ -34,8 +33,8 @@ class Scatterplot extends Component {
   componentDidMount = () => { this.resize(); };
 
   resize = () => {
-    const width = Math.max(800, this.ref.current.clientWidth);
-    const height = Math.max(600, this.ref.current.clientHeight);
+    const width = Math.max(800, this.refs.scatterplot.clientWidth);
+    const height = Math.max(600, this.refs.scatterplot.clientHeight);
     this.setState({ dimensions: { width, height } });
   };
 
@@ -59,18 +58,18 @@ class Scatterplot extends Component {
       .range([height - bPadding, tPadding]);
 
     return (
-      <svg ref={this.ref} width={width} height={height}>
+      <svg ref="scatterplot" width={width} height={height}>
         <Circles
           data={this.state.data}
           xScale={xScale}
           yScale={yScale}
         />
-        <Axis
-          data={this.state.data}
+        <Axis // X Axis
           width={width}
           height={height}
-          xScale={xScale}
-          yScale={yScale}
+          scale={xScale}
+          orient="bottom"
+          transform={`translate(0, ${height - bPadding})`}
         />
         {/* <Axis data={this.state.data} /> */}
       </svg>

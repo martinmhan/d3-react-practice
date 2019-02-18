@@ -1,17 +1,36 @@
 import React, { Component } from 'react';
+import * as d3 from 'd3';
 
-// does this need to be stateful?
-// can we move props up to Scatterplot?
-const Axis = ({ data, width, height, xScale, yScale }) => {
-  return (
+class Axis extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  componentDidMount = () => { this.renderAxis(); }
+  componentDidUpdate = () => { this.renderAxis(); }
+
+  renderAxis = () => {
+    const node = this.refs.axis;
+    const { orient, scale } = this.props;
+    const axis = 
+      orient === 'bottom' ?
+        d3.axisBottom(scale)
+          .ticks(5)
+          .tickFormat(d => d.toString())
+      : orient === 'left' ?
+        d3.axisLeft(scale)
+          .ticks(5)
+          .tickFormat(d => d.toString())
+      : null;
+
+    d3.select(node).call(axis);
+  };
+
+  render = () => (
     <g className="axiscontainer">
-      {/* <g className="axis" ref="axis" transform={props.translate} />
-      {props.orient === 'bottom'
-        ? 
-        : 
-      } */}
+      <g className="axis" ref="axis" transform={this.props.transform} />
     </g>
-  );
+  )
 }
 
 export default Axis;
