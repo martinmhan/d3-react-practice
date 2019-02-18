@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import DroppingBubbles from './transitions/DroppingBubbles';
 import BrushAndBroom from './brush-and-broom/BrushAndBroom';
-import ScatterplotContainer from './scatterplot/Scatterplot';
+import Scatterplot from './scatterplot/Scatterplot';
 import Barchart from './barchart/Barchart';
 
 class App extends Component {
@@ -12,8 +12,8 @@ class App extends Component {
   render = () => (
     <div id="app">
       {/* <DroppingBubbles /> */}
-      <BrushAndBroom />
-      {/* <ScatterplotContainer /> */}
+      {/* <BrushAndBroom /> */}
+      <Scatterplot />
     </div>
   );
 }
