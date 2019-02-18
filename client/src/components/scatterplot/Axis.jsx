@@ -5,11 +5,11 @@ import React, { Component } from 'react';
 const Axis = ({ data, width, height, xScale, yScale }) => {
   return (
     <g className="axiscontainer">
-      <g className="axis" ref="axis" transform={props.translate} />
+      {/* <g className="axis" ref="axis" transform={props.translate} />
       {props.orient === 'bottom'
         ? 
         : 
-      }
+      } */}
     </g>
   );
 }

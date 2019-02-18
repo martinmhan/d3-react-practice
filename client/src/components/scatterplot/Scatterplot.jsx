@@ -7,9 +7,6 @@ class Scatterplot extends Component {
   constructor(props) {
     super(props);
     this.ref = React.createRef();
-    
-    // what changes?
-    // move padding out of state?
     this.state = {
       data: [
         { gpa: 3.42, height: 138 },
@@ -32,27 +29,37 @@ class Scatterplot extends Component {
     }
   }
 
-  componentWillMount = () => { window.addEventListener('resize', this.updateDimensions); };
+  componentWillMount = () => { window.addEventListener('resize', this.resize); };
   componentDidMount = () => { this.resize(); };
   componentDidMount = () => { this.resize(); };
 
   resize = () => {
     const width = Math.max(800, this.ref.current.clientWidth);
     const height = Math.max(600, this.ref.current.clientHeight);
-    this.setState({ styles: { width, height } });
+    this.setState({ dimensions: { width, height } });
   };
 
   render = () => {
+    const { 
+      dimensions: { width, height },
+      padding: { lPadding, rPadding, tPadding, bPadding },
+    } = this.state;
+
+    const xMin = d3.min(this.state.data, d => parseFloat(d.gpa));
+    const xMax = d3.max(this.state.data, d => parseFloat(d.gpa));
+    const yMin = d3.min(this.state.data, d => parseFloat(d.height));
+    const yMax = d3.max(this.state.data, d => parseFloat(d.height));
+
     const xScale = d3.scaleLinear()
-      .domain([d3.min(this.state.data, d => d.gpa), d3.max(this.state.data, d => d.gpa)])
-      .range(0, width);
+      .domain([xMin, xMax])
+      .range([lPadding, width - rPadding]);
 
     const yScale = d3.scaleLinear()
-      .domain([d3.min(this.state.data, d => d.height), d3.max(this.state.data, d => d.height)])
-      .range(0, height);
+      .domain([yMin, yMax])
+      .range([height - bPadding, tPadding]);
 
     return (
-      <svg width={this.state.dimensions.width} height={this.state.dimensions.height}>
+      <svg ref={this.ref} width={width} height={height}>
         <Circles
           data={this.state.data}
           xScale={xScale}
@@ -60,8 +67,8 @@ class Scatterplot extends Component {
         />
         <Axis
           data={this.state.data}
-          width={this.state.dimensions.width}
-          height={this.state.dimensions.height}
+          width={width}
+          height={height}
           xScale={xScale}
           yScale={yScale}
         />
