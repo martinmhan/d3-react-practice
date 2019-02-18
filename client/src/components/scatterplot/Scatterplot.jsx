@@ -6,15 +6,28 @@ import Circles from './Circles.jsx';
 class Scatterplot extends Component {
   constructor(props) {
     super(props);
+    this.dataset0 = [
+      { gpa: 3.42, height: 138 },
+      { gpa: 3.54, height: 153 },
+      { gpa: 3.14, height: 148 },
+      { gpa: 2.76, height: 164 },
+      { gpa: 2.95, height: 162 },
+      { gpa: 3.36, height: 143 }
+    ];
+    this.dataset1= [
+      { gpa: 3.15, height: 157 },
+      { gpa: 3.12, height: 175 },
+      { gpa: 3.67, height: 167 },
+      { gpa: 3.85, height: 149 },
+      { gpa: 2.32, height: 165 },
+      { gpa: 3.01, height: 171 },
+      { gpa: 3.54, height: 168 },
+      { gpa: 2.89, height: 180 },
+      { gpa: 3.75, height: 153 }
+    ];
     this.state = {
-      data: [
-        { gpa: 3.42, height: 138 },
-        { gpa: 3.54, height: 153 },
-        { gpa: 3.14, height: 148 },
-        { gpa: 2.76, height: 164 },
-        { gpa: 2.95, height: 162 },
-        { gpa: 3.36, height: 143 }
-      ],
+      dataset0: true,
+      data: this.dataset0,
       dimensions: {
         width: 0,
         height: 0,
@@ -29,8 +42,15 @@ class Scatterplot extends Component {
   }
 
   componentWillMount = () => { window.addEventListener('resize', this.resize); };
-  componentDidMount = () => { this.resize(); };
-  componentDidMount = () => { this.resize(); };
+  componentDidMount = () => {
+    this.resize();
+    setInterval(this.toggleDataset, 2000);
+  };
+
+  toggleDataset = () => {
+    const data = this.state.dataset0 ? this.dataset1 : this.dataset0;
+    this.setState({ dataset0: !this.state.dataset0, data });
+  };
 
   resize = () => {
     const width = Math.max(800, this.refs.scatterplot.clientWidth);
@@ -39,7 +59,7 @@ class Scatterplot extends Component {
   };
 
   render = () => {
-    const { 
+    const {
       dimensions: { width, height },
       padding: { lPadding, rPadding, tPadding, bPadding },
     } = this.state;
@@ -71,7 +91,11 @@ class Scatterplot extends Component {
           orient="bottom"
           transform={`translate(0, ${height - bPadding})`}
         />
-        {/* <Axis data={this.state.data} /> */}
+        <Axis // Y Axis
+          scale={yScale}
+          orient="left"
+          transform={`translate(${lPadding}, 0)`}
+        />
       </svg>
     );
   }

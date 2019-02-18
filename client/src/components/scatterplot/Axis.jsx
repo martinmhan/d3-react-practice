@@ -23,7 +23,11 @@ class Axis extends Component {
           .tickFormat(d => d.toString())
       : null;
 
-    d3.select(node).call(axis);
+    const t = d3.transition().duration(750);
+
+    d3.select(node)
+      .transition(t)
+      .call(axis);
   };
 
   render = () => (
