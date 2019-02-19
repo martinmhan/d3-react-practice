@@ -11,7 +11,7 @@ class Circles extends Component {
     const t = d3.transition().duration(750);
     const node = this.refs.circles;
 
-    const circles = node.selectAll('circle') // 
+    // const circles = node.selectAll('circle')
     // React re-renders circles immediately with a new set of circle elements
     // need to be able to select circle elements when updating to apply transitions
     d3.select(node)
@@ -28,6 +28,7 @@ class Circles extends Component {
           r={5}
           fill="grey"
           key={i}
+          yScale={this.props.yScale}
         />
       ))
     }
