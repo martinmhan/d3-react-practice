@@ -10,7 +10,7 @@ class Circles extends Component {
   componentDidUpdate = () => { this.renderCircles(); }
 
   renderCircles = () => {
-    const { data, xScale, yScale} = this.props;
+    const { data, xScale, yScale, rScale} = this.props;
     const t = d3.transition()
       .duration(750);
 
@@ -24,12 +24,13 @@ class Circles extends Component {
 
     circles.transition(t)
       .attr("cx", d => xScale(d.gpa))
-      .attr("cy", d => yScale(d.height));
+      .attr("cy", d => yScale(d.height))
+      .attr('r', d => rScale(d.weight));
 
     circles.enter().append('circle')
       .attr("cx", d => xScale(d.gpa))
       .attr("cy", yScale(0))
-      .attr("r", 5)
+      .attr("r", d => rScale(d.weight))
       .attr("fill", "grey")
     .transition(t)
       .attr("cy", d => yScale(d.height));
