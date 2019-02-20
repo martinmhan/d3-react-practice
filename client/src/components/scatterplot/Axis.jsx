@@ -34,8 +34,9 @@ class Axis extends Component {
   render = () => (
     <g className="axiscontainer">
       <g className="axis" ref="axis" transform={this.props.transform} />
+      <text transform={this.props.textTransform}>{this.props.label}</text>
     </g>
-  )
+  );
 }
 
 export default Axis;

@@ -70,11 +70,11 @@ class Scatterplot extends Component {
     const yMax = d3.max(this.state.data, d => parseFloat(d.height));
 
     const xScale = d3.scaleLinear()
-      .domain([xMin, xMax])
+      .domain([xMin * 0.95, xMax * 1.05])
       .range([lPadding, width - rPadding]);
 
     const yScale = d3.scaleLinear()
-      .domain([yMin, yMax])
+      .domain([yMin * 0.95, yMax * 1.05])
       .range([height - bPadding, tPadding]);
 
     return (
@@ -85,16 +85,18 @@ class Scatterplot extends Component {
           yScale={yScale}
         />
         <Axis // X Axis
-          width={width}
-          height={height}
           scale={xScale}
           orient="bottom"
           transform={`translate(0, ${height - bPadding})`}
+          textTransform={`translate(${width/2},${height - bPadding/3})`}
+          label="GPA"
         />
         <Axis // Y Axis
           scale={yScale}
           orient="left"
           transform={`translate(${lPadding}, 0)`}
+          textTransform={`translate(${lPadding/3}, ${height/2}) rotate(-90)`}
+          label="Height"
         />
       </svg>
     );
