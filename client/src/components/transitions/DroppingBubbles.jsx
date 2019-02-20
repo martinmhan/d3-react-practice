@@ -26,7 +26,7 @@ class DroppingBubbles extends Component {
     let data = [...this.state.data];
     data.push({ key: Date.now(), x: Math.random(), y: Math.random(), r: Math.random() });
     this.setState({ data }, () => {
-      setTimeout(this.state.data.length < 100 ? this.add : this.remove, 5);
+      setTimeout(data.length < 100 ? this.add : this.remove, 5);
     });
   };
 
@@ -48,13 +48,13 @@ class DroppingBubbles extends Component {
       .attr('cx', d => this.xScale(d.x))
       .attr('cy', 0)
       .style('stroke', '#3E6E9C')
-      .transition().duration(1000)
+    .transition().duration(1000)
       .attr('cy', d => this.yScale(d.y))
       .style('stroke', '#81E797');
 
     item.exit().filter(':not(.exiting)') // Don't select already exiting nodes
       .classed('exiting', true)
-      .transition().duration(1000)
+    .transition().duration(1000)
       .attr('cy', this.height)
       .style('stroke', '#3E6E9C')
       .remove();

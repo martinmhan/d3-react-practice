@@ -11,9 +11,9 @@ class App extends Component {
 
   render = () => (
     <div id="app">
-      {/* <DroppingBubbles /> */}
+      <DroppingBubbles />
       {/* <BrushAndBroom /> */}
-      <Scatterplot />
+      {/* <Scatterplot /> */}
     </div>
   );
 }
