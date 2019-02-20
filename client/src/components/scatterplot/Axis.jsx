@@ -23,7 +23,8 @@ class Axis extends Component {
           .tickFormat(d => d.toString())
       : null;
 
-    const t = d3.transition().duration(750);
+    const t = d3.transition()
+      .duration(750);
 
     d3.select(node)
       .transition(t)
